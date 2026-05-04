@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sortarea Numelor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-icon">⌥</span>
+        <span class="brand-name">NameSort</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="sort" onclick="switchTab('sort', this)">
+          <span class="nav-icon">⇅</span> Sortare
+        </button>
+        <button class="nav-btn" data-tab="add" onclick="switchTab('add', this)">
+          <span class="nav-icon">+</span> Adaugă
+        </button>
+        <button class="nav-btn" data-tab="export" onclick="switchTab('export', this)">
+          <span class="nav-icon">↓</span> Export
+        </button>
+        <button class="nav-btn" data-tab="tests" onclick="switchTab('tests', this)">
+          <span class="nav-icon">✓</span> Teste
+        </button>
+      </nav>
+      <div class="sidebar-stats">
+        <div class="stat">
+          <span class="stat-value" id="stat-count">0</span>
+          <span class="stat-label">Nume</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" id="stat-sorted">—</span>
+          <span class="stat-label">Ordine</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <section class="tab-panel active" id="tab-sort">
+        <header class="panel-header">
+          <h1>Sortare Alfabetică</h1>
+          <p class="subtitle">Lista de nume va fi sortată automat în ordine crescătoare sau descrescătoare</p>
+        </header>
+
+        <div class="controls-row">
+          <div class="btn-group">
+            <button class="btn btn-primary" id="btn-sort-asc" onclick="sortNames('asc')">↑ A → Z</button>
+            <button class="btn btn-secondary" id="btn-sort-desc" onclick="sortNames('desc')">↓ Z → A</button>
+          </div>
+          <button class="btn btn-ghost" onclick="resetList()">↺ Reset</button>
+        </div>
+
+        <div class="list-container">
+          <div class="list-header">
+            <span id="list-count-label">Lista conține 0 nume</span>
+            <span class="order-badge" id="order-badge">nesortată</span>
+          </div>
+          <ol class="name-list" id="name-list">
+            </ol>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-add">
+        <header class="panel-header">
+          <h1>Adaugă Nume</h1>
+          <p class="subtitle">Introdu un nou nume în format „Prenume, Nume" sau „Prenume"</p>
+        </header>
+
+        <div class="add-form">
+          <div class="input-group">
+            <input
+              type="text"
+              id="name-input"
+              class="text-input"
+              placeholder="ex: Popescu, Ion"
+              autocomplete="off"
+              onkeydown="if(event.key==='Enter') addNameFromInput()"
+            />
+            <button class="btn btn-primary" onclick="addNameFromInput()">Adaugă</button>
+          </div>
+          <p class="input-hint" id="add-feedback"></p>
+        </div>
+
+        <div class="bulk-section">
+          <h2>Adaugă mai multe</h2>
+          <p class="subtitle">Separă numele prin virgulă sau pune câte unul pe linie</p>
+          <textarea
+            id="bulk-input"
+            class="bulk-textarea"
+            placeholder="Ling, Mai&#10;Johnson, Jim&#10;Zarnecki, Sabrina"
+            rows="6"
+          ></textarea>
+          <div class="btn-row">
+            <button class="btn btn-secondary" onclick="addBulk()">Adaugă toate</button>
+            <button class="btn btn-ghost" onclick="clearAllNames()">Șterge tot</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="tab-export">
+        <header class="panel-header">
+          <h1>Export</h1>
+          <p class="subtitle">Descarcă lista sortată în format .txt sau vizualizează output-ul</p>
+        </header>
+
+        <div class="export-preview">
+          <div class="preview-toolbar">
+            <span class="preview-label">Previzualizare fișier output</span>
+            <button class="btn btn-ghost btn-sm" onclick="refreshPreview()">↺ Actualizare</button>
+          </div>
+          <pre class="output-preview" id="output-preview"></pre>
+        </div>
+
+        <div class="export-actions">
+          <button class="btn btn-primary" onclick="downloadTxt()">↓ Descarcă .txt</button>
+          <button class="btn btn-secondary" onclick="copyOutput()">⎘ Copiază</button>
+        </div>
+        <p class="input-hint" id="copy-feedback"></p>
+      </section>
+
+      <section class="tab-panel" id="tab-tests">
+        <header class="panel-header">
+          <h1>Teste Unitare & Performanță</h1>
+          <p class="subtitle">Simulare Jest și provocarea legată de lucrul cu date masive</p>
+        </header>
+
+        <div class="test-runner btn-group">
+          <button class="btn btn-primary" onclick="runTests()">▶ Rulează teste unitare</button>
+          <button class="btn btn-secondary" onclick="runPerformanceTest()">⚡ Test 100.000 Nume</button>
+        </div>
+        <div class="test-results" id="test-results">
+          </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

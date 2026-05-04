@@ -1,0 +1,19 @@
+{
+  "name": "proiect4-sortarea-numelor",
+  "version": "1.0.0",
+  "description": "Proiect Tehnologii WEB - Sortarea Numelor",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest --verbose",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "keywords": ["sortare", "javascript", "web"],
+  "author": "",
+  "license": "ISC"
+}
